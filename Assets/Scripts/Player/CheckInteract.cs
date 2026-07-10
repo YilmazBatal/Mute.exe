@@ -16,7 +16,9 @@ public class CheckInteract : MonoBehaviour
         if (controls.Player.Interact.triggered && currentInteractable != null && currentInteractable.CanInteract)
         {
             TryInteract();
+            currentInteractable = null;
         }
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
