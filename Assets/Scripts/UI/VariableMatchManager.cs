@@ -49,6 +49,8 @@ public class VariableMatchManager : MonoBehaviour
 
     private void OnEnable()
     {
+        isGameOver = false;
+
         variables = new List<RectTransform> { boolVar, stringVar, integerVar, floatVar };
         variableColors = new List<Color> { boolColor, stringColor, integerColor, floatColor };
 
@@ -69,7 +71,7 @@ public class VariableMatchManager : MonoBehaviour
     private void OnDisable()
     {
         EventManager.OnFragmentChanged -= OnFragmentChanged;
-
+        LeanTween.cancel(arrow.gameObject);
     }
 
     private void RandomizeTheGame()
@@ -190,8 +192,6 @@ public class VariableMatchManager : MonoBehaviour
         isGameOver = true;
         LeanTween.cancel(arrow.gameObject);
         generatedVar.text = "SUCCESSFULY HACKED!";
-        //bug.lastActivePuzzle.GetComponent<GameSelecter>().isCompleted = true;
-        bug.lastActivePuzzle.GetComponent<SpriteOutline>().outlineSize = 0;
 
         fragments += 1;
         EventManager.TriggerFragmentChanged(fragments);

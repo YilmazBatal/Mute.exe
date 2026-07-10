@@ -2,6 +2,7 @@
 {
     public interface IInteractable
     {
+        bool CanInteract { get; }
         void OnRangeEnter();
         void OnRangeStay();
         void OnRangeExit();

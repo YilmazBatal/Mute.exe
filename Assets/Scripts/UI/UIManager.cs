@@ -22,8 +22,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject game5;
 
     private PuzzleChip activeChip;
-
-    static Dictionary<Minigames, GameObject> minigameDict = new Dictionary<Minigames, GameObject>();
+    // Eğer activeChip boş değilse, demek ki ekranda bir minigame oynanıyor!
+    public bool isMinigameActive => activeChip != null;
+    private Dictionary<Minigames, GameObject> minigameDict = new Dictionary<Minigames, GameObject>();
 
     private void Awake()
     {

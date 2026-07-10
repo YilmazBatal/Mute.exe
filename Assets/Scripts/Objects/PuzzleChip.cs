@@ -5,8 +5,10 @@ using UnityEngine;
 public class PuzzleChip : MonoBehaviour, IInteractable
 {
     [SerializeField] public Minigames minigame;
-    public bool isCompleted;
 
+    public bool isCompleted;
+    public bool CanInteract => !isCompleted;
+    
     [SerializeField] GameObject visualCue;
 
     private SpriteOutline outline;
@@ -23,7 +25,7 @@ public class PuzzleChip : MonoBehaviour, IInteractable
     }
     public void OnRangeStay()
     {
-        //
+        if (outline != null) outline.outlineSize = 1;
     }
     public void OnRangeExit()
     {
@@ -45,6 +47,7 @@ public class PuzzleChip : MonoBehaviour, IInteractable
     {
         isCompleted = true;
         Debug.Log($"{gameObject.name} puzzle is completed!");
+        outline.color = Color.red;
 
         if (visualCue.activeSelf)
         {

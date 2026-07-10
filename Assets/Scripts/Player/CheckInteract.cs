@@ -1,31 +1,21 @@
-using Assets.Scripts;
 using Assets.Scripts.Interfaces;
+using Assets.Scripts.Managers;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CheckInteract : MonoBehaviour
 {
     [SerializeField] private Sprite interactKey;
-    private InputSystem_Actions controls;
+    private InputSystem_Actions controls => InputManager.Instance.controls;
     private IInteractable currentInteractable;
     private bool isInteractionActive;
-    public Minigames minigame;
 
     [SerializeField]  public GameObject interactedObject;
-    [SerializeField]  public GameObject lastActivePuzzle;
-
-    #region Input Management
-    private void Awake() => controls = new InputSystem_Actions();
-    void OnEnable() => controls.Player.Enable();
-    void OnDisable() => controls.Player.Disable();
-    #endregion
 
     private void Update()
     {
-        if (controls.Player.Interact.triggered && !isInteractionActive)
+        if (controls.Player.Interact.triggered && currentInteractable != null && currentInteractable.CanInteract)
         {
             TryInteract();
-            isInteractionActive = true;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -37,7 +27,15 @@ public class CheckInteract : MonoBehaviour
             interactable.OnRangeEnter();
         }
     }
-    
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<IInteractable>(out IInteractable interactable))
+        {
+            currentInteractable = interactable;
+            interactable.OnRangeStay();
+        }
+    }
+
     private void OnTriggerExit2D (Collider2D collision)
     {
         if ((collision.TryGetComponent<IInteractable>(out IInteractable interactable)))

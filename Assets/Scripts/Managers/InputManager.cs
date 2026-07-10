@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Managers
 {
@@ -6,6 +7,8 @@ namespace Assets.Scripts.Managers
     {
         public static InputManager Instance { get; private set; }
         public InputSystem_Actions controls;
+
+        bool submitPressed;
 
         private void Awake()
         {
@@ -29,5 +32,26 @@ namespace Assets.Scripts.Managers
             controls.Player.Disable();
         }
 
+        public void RegisterSubmitPressed()
+        {
+            submitPressed = false;
+        }
+        public bool GetSubmitPressed()
+        {
+            bool result = submitPressed;
+            submitPressed = false;
+            return result;
+        }
+        public void SubmitPressed(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                submitPressed = true;
+            }
+            else if (context.canceled)
+            {
+                submitPressed = false;
+            }
+        }
     }
 }

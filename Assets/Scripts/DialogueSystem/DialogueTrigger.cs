@@ -1,53 +1,38 @@
-using Assets.Scripts.Managers;
+using Assets.Scripts.Interfaces;
 using UnityEngine;
 
-/// <summary>
-/// transfer the scanning work to the player later
-/// </summary>
-public class DialogueTrigger : MonoBehaviour
+public class DialogueTrigger : MonoBehaviour, IInteractable
 {
-    InputSystem_Actions controls => InputManager.Instance.controls;
-    [SerializeField] GameObject visualCue;
-    [SerializeField] TextAsset inkJSON;
-    bool inRange;
+    [SerializeField] private GameObject visualCue;
+    [SerializeField] private TextAsset inkJSON;
+    public bool CanInteract => true;
+
     private void Awake()
     {
-
-        inRange = false;
-        visualCue.gameObject.SetActive(false);
+        visualCue.transform.localScale = Vector3.zero;
+        visualCue.SetActive(false);
     }
 
-    private void Update()
+    public void OnRangeEnter()
     {
-        if (inRange)
-        {
-            visualCue.gameObject.SetActive(true);
-            if (controls.Player.Interact.triggered)
-            {
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
-            }
-        }
-        else
-        {
-            visualCue.gameObject.SetActive(false);
-        }
+        visualCue.SetActive(true);
+        Extensions.ScaleUpDown(visualCue, 0f, 4f, 0.3f);
+    }
+
+    public void OnRangeStay()
+    {
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnRangeExit()
     {
-        if (collision.gameObject.CompareTag("dialogue"))
-        {
-            inRange = true;
-            Extensions.ScaleUpDown(visualCue.gameObject, 0, 4f, 0.3f);
-        }
+        Extensions.ScaleUpDown(visualCue, visualCue.transform.localScale.x, 0f, 0.3f);
     }
-    private void OnTriggerExit2D(Collider2D collision)
+
+    public void OnInteract()
     {
-        if (collision.gameObject.CompareTag("dialogue"))
-        {
-            inRange = false;
-            Extensions.ScaleUpDown(visualCue.gameObject, 4f, 0, 0.3f);
-        }
+        DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+
+        Extensions.ScaleUpDown(visualCue, visualCue.transform.localScale.x, 0f, 0.2f);
     }
 }
