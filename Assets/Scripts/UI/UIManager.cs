@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
+    private InputManager im => InputManager.Instance;
 
     [Header("UI Elements")]
     [SerializeField] public Volume volume;
@@ -23,6 +25,10 @@ public class UIManager : MonoBehaviour
 
     private PuzzleChip activeChip;
     // Eğer activeChip boş değilse, demek ki ekranda bir minigame oynanıyor!
+
+    [Header("Pause UI Elements")]
+    [SerializeField] private GameObject pausePanel;
+    private bool pauseActive = false;
     public bool isMinigameActive => activeChip != null;
     private Dictionary<Minigames, GameObject> minigameDict = new Dictionary<Minigames, GameObject>();
 
@@ -48,8 +54,38 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
-        fragmentText.text = $"{GameManager.Instance.fragments}/{GameManager.Instance.maxFragments}";
+        if (fragmentText != null)
+            fragmentText.text = $"{GameManager.Instance.fragments}/{GameManager.Instance.maxFragments}";
     }
+    private void Update()
+    {
+        if (im.controls.Player.Cancel.triggered)
+            ProccessPausing();
+    }
+    #region MenuConfig
+    private void ProccessPausing()
+    {
+        pauseActive = !pauseActive;
+        if (pauseActive)
+        {
+            Extensions.OpacityFade(pausePanel, 0f, 1f, 0.3f);
+            pausePanel.SetActive(true);
+        }
+        else
+        {
+            Extensions.OpacityFade(pausePanel, 1f, 0f, 0.3f);
+        }
+    }
+    public void ContinueBTN()
+    {
+        ProccessPausing();
+    }
+    public void MenuBTN()
+    {
+        SceneManager.LoadScene(0);
+    }
+    #endregion
+
     public void ShowInteract(bool value)
     {
         interactText.gameObject.SetActive(value);
@@ -81,6 +117,25 @@ public class UIManager : MonoBehaviour
                 activeChip.CompletePuzzle();
             }
             activeChip = null;
+        });
+    }
+    public void OpenPanel(GameObject panel)
+    {
+        panel.SetActive(true);
+        LeanTween.value(panel, (float value) =>
+        {
+            panel.transform.localScale = new Vector3(value, value, value);
+        }, 0f, 1f, 0.3f).setEase(LeanTweenType.easeInOutCubic);
+    }
+    public void ClosePanel(GameObject panel)
+    {
+        LeanTween.value(panel, (float value) =>
+        {
+            panel.transform.localScale = new Vector3(value, value, value);
+        }, 1f, 0f, 0.3f).setEase(LeanTweenType.easeInOutCubic)
+        .setOnComplete(() =>
+        {
+            panel.SetActive(false);
         });
     }
 }

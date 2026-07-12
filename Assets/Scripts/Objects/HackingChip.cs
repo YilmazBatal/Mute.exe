@@ -1,18 +1,17 @@
 using Assets.Scripts;
 using Assets.Scripts.Interfaces;
+using Assets.Scripts.Managers;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PuzzleChip : MonoBehaviour, IInteractable
+public class HackingChip : MonoBehaviour, IInteractable
 {
-    [SerializeField] public Minigames minigame;
-
     public bool isCompleted;
+    GameManager gm => GameManager.Instance;
     public bool CanInteract => !isCompleted;
-    
     [SerializeField] GameObject visualCue;
-
     private SpriteOutline outline;
-    
+
     void Awake()
     {
         outline = GetComponent<SpriteOutline>();
@@ -26,6 +25,7 @@ public class PuzzleChip : MonoBehaviour, IInteractable
     public void OnRangeStay()
     {
         if (outline != null) outline.outlineSize = 1;
+        visualCue.transform.localScale = Vector3.one * 4;
     }
     public void OnRangeExit()
     {
@@ -37,9 +37,15 @@ public class PuzzleChip : MonoBehaviour, IInteractable
     public void OnInteract()
     {
         Debug.Log($"Interacted with {gameObject.name}");
-        if (!isCompleted)
+
+        if (gm.fragments == gm.maxFragments)
         {
-            UIManager.Instance.LaunchMinigame(minigame, this);
+            Debug.Log($"Maze 1 is completed. you can code a fun boss fight or just tp to the next area since u are in a hurry. for now ill make a next level menu");
+        }
+        else
+        {
+            Debug.Log($"Find the rest of the code fragments. you dont have enough data to hack this network");
+
         }
     }
 
@@ -48,12 +54,10 @@ public class PuzzleChip : MonoBehaviour, IInteractable
         isCompleted = true;
         Debug.Log($"{gameObject.name} puzzle is completed!");
         outline.color = Color.red;
-        gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
 
         if (visualCue.activeSelf)
         {
             Extensions.ScaleUpDown(visualCue, visualCue.transform.localScale.x, 0f, 0.2f);
         }
     }
-
 }

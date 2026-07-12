@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using static UnityEngine.Rendering.DebugUI;
 
 public static class Extensions
 {
@@ -102,4 +101,28 @@ public static class Extensions
                     image.SetActive(false);
             });
     }
+
+    public static void OpacityFade(GameObject image, float from, float to, float duration)
+    {
+        CanvasGroup canvasGroup = image.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = image.AddComponent<CanvasGroup>();
+        }
+        LeanTween.value(image, from, to, duration)
+            .setEaseInOutCubic()
+            .setOnUpdate((float value) =>
+            {
+                canvasGroup.alpha = value;
+            })
+            .setOnComplete(() =>
+            {
+                if (to <= 0.01f)
+                {
+                    image.SetActive(false);
+                }
+            }); ;
+    }
+
+    //public static void 
 }

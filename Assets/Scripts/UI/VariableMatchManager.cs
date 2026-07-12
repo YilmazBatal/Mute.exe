@@ -2,6 +2,7 @@ using Assets.Scripts;
 using Assets.Scripts.Managers;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -172,6 +173,7 @@ public class VariableMatchManager : MonoBehaviour
             {
                 Debug.Log("Missed! Try again.");
                 Extensions.Shake(this.gameObject.GetComponent<RectTransform>(), this, 0.5f, 10f);
+                gm.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
                 Extensions.FailEffect(um.volume, um);
                 um.CloseMinigame(minigame: Minigames.VariableMatch, didPlayerWin: false);
             }
