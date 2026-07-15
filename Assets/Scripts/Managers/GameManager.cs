@@ -7,7 +7,8 @@ namespace Assets.Scripts.Managers
         public static GameManager Instance { get; private set; }
         public GameObject bug;
         [SerializeField] public int fragments = 0;
-        [SerializeField] public int maxFragments;
+        [HideInInspector] public int maxFragments;
+        [HideInInspector] public string levelName;
 
         [SerializeField] public PuzzleChip puzzleChip;
 
@@ -19,13 +20,14 @@ namespace Assets.Scripts.Managers
                 return;
             }
             Instance = this;
-
-            Initialize();
-        }
-        private void Initialize()
-        {
+            DontDestroyOnLoad(gameObject);
             bug = GameObject.FindGameObjectWithTag("Player");
-            fragments = 0;
+
+        }
+        public void Initialize(int maxFragments, string levelName)
+        {
+            this.maxFragments = maxFragments;
+            this.levelName = levelName;
         }
     }
 }

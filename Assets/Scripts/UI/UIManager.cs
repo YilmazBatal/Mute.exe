@@ -59,8 +59,11 @@ public class UIManager : MonoBehaviour
     }
     private void Update()
     {
-        if (im.controls.Player.Cancel.triggered)
-            ProccessPausing();
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            if (im.controls.Player.Cancel.triggered)
+                ProccessPausing();
+        }
     }
     #region MenuConfig
     private void ProccessPausing()
