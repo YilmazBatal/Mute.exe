@@ -74,7 +74,7 @@ public class DialogueManager : MonoBehaviour
             currentStory.currentChoices.Count == 0)
         {
             GameManager.Instance.bug.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-                ContinueStory();
+            ContinueStory();
         }
     }
 

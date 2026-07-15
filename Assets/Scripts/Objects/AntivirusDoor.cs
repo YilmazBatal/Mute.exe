@@ -2,6 +2,7 @@ using Assets.Scripts.Interfaces;
 using Assets.Scripts.Managers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AntivirusDoor : MonoBehaviour, IInteractable
 {
@@ -40,15 +41,14 @@ public class AntivirusDoor : MonoBehaviour, IInteractable
         else
             Extensions.FailEffect(UIManager.Instance.volume, this);
     }
-
     public void OnRangeEnter()
     {
-        spriteOutline.outlineSize = 1;
+        if (spriteOutline != null) spriteOutline.outlineSize = 1;
     }
 
     public void OnRangeExit()
     {
-        spriteOutline.outlineSize = 0;
+        if (spriteOutline != null) spriteOutline.outlineSize = 0;
     }
 
     public void OnRangeStay()

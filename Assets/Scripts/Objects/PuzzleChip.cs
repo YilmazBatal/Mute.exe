@@ -10,12 +10,17 @@ public class PuzzleChip : MonoBehaviour, IInteractable
     public bool CanInteract => !isCompleted;
     
     [SerializeField] GameObject visualCue;
+    [SerializeField] Sprite disabledSprite;
 
     private SpriteOutline outline;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
     
     void Awake()
     {
         outline = GetComponent<SpriteOutline>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         visualCue.SetActive(false);
     }
     public void OnRangeEnter()
@@ -36,7 +41,6 @@ public class PuzzleChip : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        Debug.Log($"Interacted with {gameObject.name}");
         if (!isCompleted)
         {
             UIManager.Instance.LaunchMinigame(minigame, this);
@@ -46,14 +50,18 @@ public class PuzzleChip : MonoBehaviour, IInteractable
     public void CompletePuzzle()
     {
         isCompleted = true;
-        Debug.Log($"{gameObject.name} puzzle is completed!");
         outline.color = Color.red;
-        gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
-
+        DisableChip();
         if (visualCue.activeSelf)
         {
             Extensions.ScaleUpDown(visualCue, visualCue.transform.localScale.x, 0f, 0.2f);
         }
     }
 
+    private void DisableChip()
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = Color.gray;
+        animator.enabled = false;
+        spriteRenderer.sprite = disabledSprite;
+    }
 }

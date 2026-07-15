@@ -64,6 +64,10 @@ public class UIManager : MonoBehaviour
             if (im.controls.Player.Cancel.triggered)
                 ProccessPausing();
         }
+        if (isMinigameActive)
+        {
+            GameManager.Instance.bug.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+        }
     }
     #region MenuConfig
     private void ProccessPausing()

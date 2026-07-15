@@ -10,7 +10,12 @@ public class SceneInitializer : MonoBehaviour
     {
         if (GameManager.Instance != null)
             GameManager.Instance.Initialize(requiredFragmentsForThisLevel, levelName);
-        Destroy(gameObject);
+            
+        // Prevent destroying the GameManager if attached to the same GameObject
+        if (GetComponent<GameManager>() != null)
+            Destroy(this);
+        else
+            Destroy(gameObject);
     }
 
 }

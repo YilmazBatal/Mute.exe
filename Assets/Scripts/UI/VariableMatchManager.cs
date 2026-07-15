@@ -12,13 +12,13 @@ public class VariableMatchManager : MonoBehaviour
 
     [Header("Borders & Movement")]
     [SerializeField] private RectTransform arrow;
-    [SerializeField] private RectTransform mainBar; // Ensure this has a Horizontal Layout Group!
+    [SerializeField] private RectTransform mainBar; 
     bool isGameOver = false;
 
     [Header("UI Elements")]
     [SerializeField] private Button closeBTN;
-    [SerializeField] private TMP_Text matchText;    // e.g., Shows "0/4"
-    [SerializeField] private TMP_Text generatedVar; // e.g., Shows "Value 1 : True" or "Value 1 : 42"
+    [SerializeField] private TMP_Text matchText;    
+    [SerializeField] private TMP_Text generatedVar; 
     private int correctMatches = 0;
     private int totalMatches = 1;
 
@@ -85,7 +85,6 @@ public class VariableMatchManager : MonoBehaviour
             variables[i].SetSiblingIndex(randomIndex);
             indexes.Remove(randomIndex);
 
-            // 2. Assign sizes and colors
             variables[i].sizeDelta = new Vector2(Random.Range(minWidth, maxWidth), variables[i].sizeDelta.y);
             variables[i].GetComponent<Image>().color = variableColors[i];
         }
@@ -93,7 +92,6 @@ public class VariableMatchManager : MonoBehaviour
         // Force the layout group to update coordinates immediately
         LayoutRebuilder.ForceRebuildLayoutImmediate(mainBar);
 
-        // 3. Pick a random question type
         GenerateNewQuestion();
     }
 
@@ -110,7 +108,7 @@ public class VariableMatchManager : MonoBehaviour
                 randomValueDisplay = Random.value > 0.5f ? "True" : "False";
                 break;
             case "String":
-                string[] words = { "\"Hello\"", "\"Data\"", "\"Unity\"", "\"Code\"" };
+                string[] words = { "\"Mute\"", "\"Data\"", "\"Propaganda\"", "\"Firewall\"", "\"Code\"" };
                 randomValueDisplay = words[Random.Range(0, words.Length)];
                 break;
             case "Integer":
@@ -142,7 +140,6 @@ public class VariableMatchManager : MonoBehaviour
     {
         if (isGameOver) return;
 
-        // Find the block that corresponds to our target type
         RectTransform targetBlock = null;
         if (currentTargetType == "Bool") targetBlock = boolVar;
         else if (currentTargetType == "String") targetBlock = stringVar;
@@ -165,7 +162,7 @@ public class VariableMatchManager : MonoBehaviour
                 UpdateMatchText();
 
                 if (correctMatches >= totalMatches)
-                    WinGame(gm.fragments);
+                    WinGame();
                 else
                     GenerateNewQuestion();
             }
@@ -189,14 +186,14 @@ public class VariableMatchManager : MonoBehaviour
         um.fragmentText.text = $"Fragments: {fragments}/{gm.maxFragments}";
         Extensions.ZoomInOut(um.fragmentText.transform.parent.gameObject, 1.2f, 0.75f);
     }
-    private void WinGame(int fragments)
+    private void WinGame()
     {
         isGameOver = true;
         LeanTween.cancel(arrow.gameObject);
         generatedVar.text = "SUCCESSFULY HACKED!";
 
-        fragments += 1;
-        EventManager.TriggerFragmentChanged(fragments);
+        GameManager.Instance.fragments += 1;
+        EventManager.TriggerFragmentChanged(GameManager.Instance.fragments);
 
         Debug.Log("Minigame Complete!");
         um.CloseMinigame(minigame: Minigames.VariableMatch, didPlayerWin: true);
