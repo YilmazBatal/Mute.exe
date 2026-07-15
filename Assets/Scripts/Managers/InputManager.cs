@@ -7,7 +7,6 @@ namespace Assets.Scripts.Managers
     {
         public static InputManager Instance { get; private set; }
         public InputSystem_Actions controls;
-
         bool submitPressed;
 
         private void Awake()
@@ -30,6 +29,22 @@ namespace Assets.Scripts.Managers
         void OnDisable()
         {
             controls.Player.Disable();
+        }
+
+        public void EnablePlayerControls()
+        {
+            controls.UI.Disable();
+            controls.Player.Enable();
+
+            Debug.Log("Kontroller: PLAYER moduna geçildi.");
+        }
+
+        public void EnableUIControls()
+        {
+            controls.Player.Disable();
+            controls.UI.Enable();
+
+            Debug.Log("Kontroller: UI moduna geçildi.");
         }
 
         public void RegisterSubmitPressed()

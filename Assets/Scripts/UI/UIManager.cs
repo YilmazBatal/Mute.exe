@@ -67,6 +67,11 @@ public class UIManager : MonoBehaviour
         if (isMinigameActive)
         {
             GameManager.Instance.bug.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+            InputManager.Instance.EnableUIControls();
+        }
+        else
+        {
+            InputManager.Instance.EnablePlayerControls();
         }
     }
     #region MenuConfig

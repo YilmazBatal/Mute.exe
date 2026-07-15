@@ -17,6 +17,7 @@ public class VariableMatchManager : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField] private Button closeBTN;
+    [SerializeField] private Button assignBTN;
     [SerializeField] private TMP_Text matchText;    
     [SerializeField] private TMP_Text generatedVar; 
     private int correctMatches = 0;
@@ -60,6 +61,8 @@ public class VariableMatchManager : MonoBehaviour
 
         RandomizeTheGame();
         HandleArrow();
+
+        assignBTN.Select();
 
         closeBTN.onClick.RemoveAllListeners();
         closeBTN.onClick.AddListener(() =>
@@ -148,13 +151,22 @@ public class VariableMatchManager : MonoBehaviour
 
         if (targetBlock != null)
         {
-            // Calculate the block's exact boundaries relative to the mainBar container
-            float blockLeftEdge = targetBlock.anchoredPosition.x - (targetBlock.sizeDelta.x / 2f);
-            float blockRightEdge = targetBlock.anchoredPosition.x + (targetBlock.sizeDelta.x / 2f);
+            // 1. HEDEF BLOĞUN GERÇEK DÜNYA KOORDİNATLARINI BULUYORUZ
+            Vector3[] blockCorners = new Vector3[4];
+            targetBlock.GetWorldCorners(blockCorners);
 
-            // Check if the arrow is currently inside those bounds
-            float arrowX = arrow.anchoredPosition.x;
+            // corners[0] sol alt köşeyi, corners[2] sağ üst köşeyi temsil eder.
+            float blockLeftEdge = blockCorners[0].x;
+            float blockRightEdge = blockCorners[2].x;
 
+            // 2. OKUN GERÇEK DÜNYA KOORDİNATLARINI BULUYORUZ
+            Vector3[] arrowCorners = new Vector3[4];
+            arrow.GetWorldCorners(arrowCorners);
+
+            // Okun tam merkez noktasını (X ekseni) hesaplıyoruz
+            float arrowX = (arrowCorners[0].x + arrowCorners[2].x) / 2f;
+
+            // 3. KESİN ÇARPIŞMA KONTROLÜ
             if (arrowX >= blockLeftEdge && arrowX <= blockRightEdge)
             {
                 Debug.Log("Correct Match!");

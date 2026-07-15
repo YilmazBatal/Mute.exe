@@ -47,7 +47,7 @@ public static class Extensions
         {
             // Save original settings to restore later
             Color originalColor = vignette.color.value;
-            float originalIntensity = vignette.intensity.value;
+            float originalIntensity = 0.4f;
 
             // 1. Instantly snap to a heavy red flash
             vignette.color.overrideState = true;
