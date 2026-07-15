@@ -121,8 +121,6 @@ public static class Extensions
                 {
                     image.SetActive(false);
                 }
-            }); ;
+            });
     }
-
-    //public static void 
 }

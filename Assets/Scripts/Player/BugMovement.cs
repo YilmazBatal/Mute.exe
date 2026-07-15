@@ -1,11 +1,11 @@
 using Assets.Scripts.Managers;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class BugMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float acceleration = 5f;
+    [HideInInspector] private AudioSource audioSource;
     public Rigidbody2D rb;
     private Animator animator;
     private InputSystem_Actions controls => InputManager.Instance.controls;
@@ -15,6 +15,7 @@ public class BugMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     float rotationSpeed = 720f; // Degrees per second
@@ -24,6 +25,7 @@ public class BugMovement : MonoBehaviour
         {
             moveInput = controls.Player.Move.ReadValue<Vector2>();
 
+            rb.angularVelocity = 0;
             if (moveInput.sqrMagnitude > 0.001f)
             {
                 float targetAngle = Mathf.Atan2(moveInput.x, moveInput.y) * Mathf.Rad2Deg;
@@ -35,6 +37,15 @@ public class BugMovement : MonoBehaviour
                     targetRotation,
                     rotationSpeed * Time.deltaTime
                 );
+
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+            }
+            else
+            {
+                audioSource.Stop();
             }
         }
     }
