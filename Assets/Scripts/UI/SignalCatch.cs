@@ -117,6 +117,7 @@ public class SignalCatch : MonoBehaviour
         AssignButtonFunctions();
 
         EventManager.OnFragmentChanged += OnFragmentChanged;
+
     }
 
     private void OnDisable()
@@ -161,15 +162,25 @@ public class SignalCatch : MonoBehaviour
                 .setEaseInOutSine();
         }
 
+        StartSignalAnimation();
+    }
+
+    private void StartSignalAnimation()
+    {
+        if (isGameOver || !gameObject.activeInHierarchy) return;
+
         signalRect.position = wifi.position;
 
         LeanTween.move(signalRect.gameObject, folder.position, 3f)
             .setEaseInOutSine()
-            .setLoopClamp();
+            .setOnComplete(() =>
+            {
+                StartSignalAnimation();
+            });
     }
     private void OnFragmentChanged(int fragments)
     {
-        um.fragmentText.text = $"Fragments: {fragments}/{gm.maxFragments}";
+        um.fragmentText.text = $"{fragments}/{gm.maxFragments}";
         Extensions.ZoomInOut(um.fragmentText.transform.parent.gameObject, 1.2f, 0.75f);
     }
     private void WinGame()

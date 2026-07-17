@@ -195,7 +195,7 @@ public class VariableMatchManager : MonoBehaviour
     }
     private void OnFragmentChanged(int fragments)
     {
-        um.fragmentText.text = $"Fragments: {fragments}/{gm.maxFragments}";
+        um.fragmentText.text = $"{fragments}/{gm.maxFragments}";
         Extensions.ZoomInOut(um.fragmentText.transform.parent.gameObject, 1.2f, 0.75f);
     }
     private void WinGame()

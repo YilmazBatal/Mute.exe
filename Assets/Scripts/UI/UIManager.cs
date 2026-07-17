@@ -105,7 +105,6 @@ public class UIManager : MonoBehaviour
     public void LaunchMinigame(Minigames minigame, PuzzleChip triggerChip)
     {
         activeChip = triggerChip;
-        Debug.Log($"Launching minigame: {minigame} for chip: {triggerChip.name}");
 
         minigameDict[minigame].SetActive(true);
         minigameDict[minigame].GetComponent<Transform>().localScale = Vector3.zero;
