@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     [Header("Minigames")]
     [SerializeField] private GameObject logicGates;
     [SerializeField] private GameObject variableConnect;
-    [SerializeField] private GameObject game3;
+    [SerializeField] private GameObject signalCatch;
     [SerializeField] private GameObject game4;
     [SerializeField] private GameObject game5;
 
@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour
         minigameDict = new Dictionary<Minigames, GameObject>{
             { Minigames.LogicGates, logicGates },
             { Minigames.VariableMatch, variableConnect },
-            { Minigames.Game3, game3 },
+            { Minigames.SignalCatch, signalCatch },
             { Minigames.Game4, game4 },
             { Minigames.Game5, game5 }
         };

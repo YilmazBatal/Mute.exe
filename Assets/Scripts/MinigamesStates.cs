@@ -4,7 +4,7 @@
     {
         LogicGates,
         VariableMatch,
-        Game3,
+        SignalCatch,
         Game4,
         Game5
     }

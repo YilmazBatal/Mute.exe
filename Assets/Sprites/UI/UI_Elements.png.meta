@@ -336,10 +336,10 @@ TextureImporter:
       name: UI_Elements_10
       rect:
         serializedVersion: 2
-        x: 80
-        y: 224
-        width: 16
-        height: 16
+        x: 82
+        y: 226
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -446,10 +446,10 @@ TextureImporter:
       name: UI_Elements_15
       rect:
         serializedVersion: 2
-        x: 96
-        y: 240
-        width: 16
-        height: 16
+        x: 98
+        y: 242
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -465,7 +465,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Elements_16
+      name: Signal_S
       rect:
         serializedVersion: 2
         x: 112
@@ -487,7 +487,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Elements_17
+      name: Signal_M
       rect:
         serializedVersion: 2
         x: 128
@@ -509,7 +509,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Elements_18
+      name: Signal_L
       rect:
         serializedVersion: 2
         x: 144
@@ -600,10 +600,10 @@ TextureImporter:
       name: UI_Elements_22
       rect:
         serializedVersion: 2
-        x: 112
-        y: 224
-        width: 16
-        height: 16
+        x: 114
+        y: 226
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -622,10 +622,10 @@ TextureImporter:
       name: UI_Elements_23
       rect:
         serializedVersion: 2
-        x: 80
-        y: 208
-        width: 16
-        height: 16
+        x: 82
+        y: 210
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -644,10 +644,10 @@ TextureImporter:
       name: UI_Elements_24
       rect:
         serializedVersion: 2
-        x: 96
-        y: 208
-        width: 16
-        height: 16
+        x: 98
+        y: 210
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -666,10 +666,10 @@ TextureImporter:
       name: UI_Elements_25
       rect:
         serializedVersion: 2
-        x: 112
-        y: 208
-        width: 16
-        height: 16
+        x: 114
+        y: 210
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -693,7 +693,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -702,6 +702,50 @@ TextureImporter:
       bones: []
       spriteID: 1c324c4afce3f0d498ff67aff112525c
       internalID: -843936152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LowSignal
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 226
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8c760c10c96183458f553a4ef90d9b6
+      internalID: 1828623851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HighSignal
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 210
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96914912eefd1fe4c90bc0144248c825
+      internalID: -213810397
       vertices: []
       indices: 
       edges: []
@@ -720,6 +764,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      HighSignal: -213810397
+      LowSignal: 1828623851
+      Signal_L: -1529187916
+      Signal_M: -839110880
+      Signal_S: -405298750
       UI_Elements_0: -7663377620997365329
       UI_Elements_1: -1114586803
       UI_Elements_10: -665419910
@@ -728,9 +777,6 @@ TextureImporter:
       UI_Elements_13: -1443335850
       UI_Elements_14: 881668393
       UI_Elements_15: -1306276788
-      UI_Elements_16: -405298750
-      UI_Elements_17: -839110880
-      UI_Elements_18: -1529187916
       UI_Elements_19: 1671195274
       UI_Elements_2: -963076287
       UI_Elements_20: 1025498786
