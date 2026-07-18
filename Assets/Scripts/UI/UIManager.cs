@@ -26,9 +26,12 @@ public class UIManager : MonoBehaviour
     private PuzzleChip activeChip;
     // Eğer activeChip boş değilse, demek ki ekranda bir minigame oynanıyor!
 
-    [Header("Pause UI Elements")]
+    [Header("Pause & NextStage UI Elements")]
     [SerializeField] private GameObject pausePanel;
     private bool pauseActive = false;
+
+    [SerializeField] private GameObject nextStageUI;
+    private bool nextStageUIActive = false;
     public bool isMinigameActive => activeChip != null;
     private Dictionary<Minigames, GameObject> minigameDict = new Dictionary<Minigames, GameObject>();
 
@@ -56,6 +59,9 @@ public class UIManager : MonoBehaviour
     {
         if (fragmentText != null)
             fragmentText.text = $"{GameManager.Instance.fragments}/{GameManager.Instance.maxFragments}";
+
+        nextStageUI = GameObject.FindWithTag("NextStage");
+
     }
     private void Update()
     {
@@ -75,6 +81,18 @@ public class UIManager : MonoBehaviour
         }
     }
     #region MenuConfig
+    public void ProccessNextStageUI()
+
+    {
+        nextStageUIActive = !nextStageUIActive;
+        if (nextStageUIActive)
+        {
+            Extensions.OpacityFade(nextStageUI, 0f, 1f, 0.3f);
+            nextStageUI.SetActive(true);
+        }
+        else
+            Extensions.OpacityFade(nextStageUI, 1f, 0f, 0.3f);
+    }
     private void ProccessPausing()
     {
         pauseActive = !pauseActive;
@@ -84,9 +102,7 @@ public class UIManager : MonoBehaviour
             pausePanel.SetActive(true);
         }
         else
-        {
             Extensions.OpacityFade(pausePanel, 1f, 0f, 0.3f);
-        }
     }
     public void ContinueBTN()
     {

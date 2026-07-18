@@ -8,6 +8,7 @@ public class HackingChip : MonoBehaviour, IInteractable
 {
     public bool isCompleted;
     GameManager gm => GameManager.Instance;
+    UIManager um => UIManager.Instance;
     public bool CanInteract => !isCompleted;
     [SerializeField] GameObject visualCue;
     private SpriteOutline outline;
@@ -36,10 +37,9 @@ public class HackingChip : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        Debug.Log($"Interacted with {gameObject.name}");
-
         if (gm.fragments == gm.maxFragments)
         {
+            um.ProccessNextStageUI();
             Debug.Log($"Maze 1 is completed. you can code a fun boss fight or just tp to the next area since u are in a hurry. for now ill make a next level menu");
         }
         else

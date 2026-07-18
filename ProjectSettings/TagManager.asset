@@ -7,6 +7,7 @@ TagManager:
   - interactable
   - CompletedPuzzle
   - dialogue
+  - NextStage
   layers:
   - Default
   - TransparentFX
