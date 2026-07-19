@@ -23871,6 +23871,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InfoChip
       objectReference: {fileID: 0}
+    - target: {fileID: 4457510461979491525, guid: 5334f071a453ed34b978042b717be812, type: 3}
+      propertyPath: inkJSON
+      value: 
+      objectReference: {fileID: 4900000, guid: dcac75b81b5560b4b95e42fa4a80d24b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
