@@ -1,6 +1,5 @@
 using Assets.Scripts.Managers;
 using Ink.Runtime;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -80,14 +79,17 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
-        currentStory = new Story(inkJSON.text);
-        dialogueIsPlaying = true;
-        dialoguePanel.SetActive(true);
-        ContinueStory();
+        if (!dialogueIsPlaying)
+        {
+            currentStory = new Story(inkJSON.text);
+            dialogueIsPlaying = true;
+            dialoguePanel.SetActive(true);
+            dialogueTalker.text = "???";
+            portraitAnimator.Play("default");
+            layoutAnimator.Play("right");
 
-        dialogueTalker.text = "???";
-        portraitAnimator.Play("default");
-        layoutAnimator.Play("right");
+            ContinueStory();
+        }
     }
 
     public void ContinueStory()
