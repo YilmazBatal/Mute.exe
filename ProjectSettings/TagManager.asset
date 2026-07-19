@@ -8,6 +8,9 @@ TagManager:
   - CompletedPuzzle
   - dialogue
   - NextStage
+  - ToxicWall
+  - Enemy
+  - Obstacles
   layers:
   - Default
   - TransparentFX

@@ -1033,7 +1033,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -182, y: -324.88098}
+  m_AnchoredPosition: {x: -182, y: -347}
   m_SizeDelta: {x: 146.9519, y: 141.1931}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &289372336
@@ -5166,7 +5166,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -255.2727, y: -195.88095}
+  m_AnchoredPosition: {x: -255.2727, y: -228}
   m_SizeDelta: {x: -532.23, y: -699.5679}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &688365408
@@ -5509,10 +5509,11 @@ MonoBehaviour:
   interactText: {fileID: 0}
   logicGates: {fileID: 0}
   variableConnect: {fileID: 0}
-  game3: {fileID: 0}
+  signalCatch: {fileID: 0}
   game4: {fileID: 0}
   game5: {fileID: 0}
   pausePanel: {fileID: 0}
+  nextStageUI: {fileID: 0}
 --- !u!1 &853377159
 GameObject:
   m_ObjectHideFlags: 0
@@ -6688,7 +6689,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 329.71838, y: -195.88095}
+  m_AnchoredPosition: {x: 329.71838, y: -227.99997}
   m_SizeDelta: {x: -444.7932, y: -699.5679}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1220086715
@@ -7139,8 +7140,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -255.27, y: 19.469604}
-  m_SizeDelta: {x: -532.23, y: -488.4881}
+  m_AnchoredPosition: {x: -255.27002, y: 7.952301}
+  m_SizeDelta: {x: -532.23, y: -434.9942}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1274929097
 MonoBehaviour:
@@ -7162,15 +7163,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'PROJECT LEAD
-
-    SCRIPTING
+  m_text: 'SCRIPTING
 
     PIXEL ART
 
     UI DESIGN
 
     ANIMATIONS
+
+    LEVEL DESIGN
 
     GAME
     DESIGN
@@ -7204,7 +7205,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.3
+  m_fontSize: 52.25
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11006,8 +11007,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 329.72, y: 21.930511}
-  m_SizeDelta: {x: -444.79, y: -483.5608}
+  m_AnchoredPosition: {x: 388.77, y: 7.9522095}
+  m_SizeDelta: {x: -326.6959, y: -434.99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1486064094
 MonoBehaviour:
@@ -11031,7 +11032,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'STORY
 
-    SOUND DESIGN
+    SFX & MUSIC DESIGN
 
     GAME DESIGN
 
@@ -16374,7 +16375,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 277}
+  m_AnchoredPosition: {x: 0, y: 303}
   m_SizeDelta: {x: 945.4344, y: 231.5655}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1781155137
