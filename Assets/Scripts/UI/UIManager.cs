@@ -85,6 +85,7 @@ public class UIManager : MonoBehaviour
 
     {
         nextStageUIActive = !nextStageUIActive;
+        AudioManager.Instance.PlaySFX("PauseUI");
         if (nextStageUIActive)
         {
             Extensions.OpacityFade(nextStageUI, 0f, 1f, 0.3f);
@@ -96,6 +97,7 @@ public class UIManager : MonoBehaviour
     private void ProccessPausing()
     {
         pauseActive = !pauseActive;
+        AudioManager.Instance.PlaySFX("PauseUI");
         if (pauseActive)
         {
             Extensions.OpacityFade(pausePanel, 0f, 1f, 0.3f);

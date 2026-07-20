@@ -11,9 +11,14 @@ public class MySceneManager : MonoBehaviour
     [SerializeField] private GameObject loadingScreenPanel;
     [SerializeField] private RectTransform loadingIcon;
 
+    private void Start()
+    {
+        MusicPlayer();
+    }
     public void StartGame()
     {
         SceneManager.LoadScene(1);
+        
     }
     public void NextLevel()
     {
@@ -37,4 +42,17 @@ public class MySceneManager : MonoBehaviour
     {
         Application.Quit();
     }
+    
+    private void MusicPlayer()
+    {
+        Debug.Log("Music Player func called.");
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            AudioManager.Instance.PlayMusic("MenuMusic");
+        } else
+        {
+            AudioManager.Instance.PlayMusic("GameMusic");
+        }
+    }
+    
 }

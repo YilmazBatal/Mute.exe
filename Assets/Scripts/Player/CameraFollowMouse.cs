@@ -7,10 +7,9 @@ public class CameraFollowMouse : MonoBehaviour
     [SerializeField] private Transform playerTransform;
 
     [Header("Limits")]
-    [Tooltip("Kameranın oyuncudan en fazla ne kadar uzaklaşabileceğini belirler.")]
     [SerializeField] private float maxLookDistance = 4f;
 
-    [Tooltip("0 = Kamera tamamen oyuncuda kalır. 1 = Kamera tamamen fareye odaklanır.")]
+    [Tooltip("0 = Camera on Player. 1 = Camera on Mouse.")]
     [SerializeField][Range(0f, 1f)] private float mouseInfluence = 0.25f;
 
     private Camera mainCamera;
@@ -18,9 +17,8 @@ public class CameraFollowMouse : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        //Cursor.visible = false; // İmleci gizle
+        //Cursor.visible = false;
         //Cursor.lockState = CursorLockMode.Confined;
-        // Eğer Inspector'dan Player atanmadıysa otomatik bulmayı dene
         if (playerTransform == null)
         {
             GameObject player = GameObject.FindWithTag("Player");
