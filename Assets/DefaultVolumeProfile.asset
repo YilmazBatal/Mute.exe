@@ -441,6 +441,7 @@ MonoBehaviour:
   m_Name: DefaultVolumeProfile
   m_EditorClassIdentifier: 
   components:
+  - {fileID: -3978695733392391637}
   - {fileID: -277880470225475626}
   - {fileID: 3460444317416099510}
   - {fileID: 7933203426823181213}
@@ -451,7 +452,6 @@ MonoBehaviour:
   - {fileID: 8549655192814258499}
   - {fileID: -7645455725216806467}
   - {fileID: -8186968272690591729}
-  - {fileID: -3978695733392391637}
   - {fileID: -1083910812058648046}
 --- !u!114 &2332282131777942337
 MonoBehaviour:
