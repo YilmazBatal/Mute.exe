@@ -6,8 +6,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private float speed = 10f;       // Merminin uçuş hızı
-    [SerializeField] private float lifeTime = 2f;     // Kaç saniye sonra yok olacağı
+    [SerializeField] private float speed = 10f;  
+    [SerializeField] private float lifeTime = 2f;  
     private ParticleSystem explosion;
     private Rigidbody2D rb;
 
@@ -27,7 +27,8 @@ public class Bullet : MonoBehaviour
             .setEaseInOutCubic()
             .setOnUpdate((float value) =>
             {
-                transform.localScale = new Vector3(value, value, value);
+                if (gameObject != null)
+                    transform.localScale = new Vector3(value, value, value);
             });
     }
 
@@ -39,20 +40,27 @@ public class Bullet : MonoBehaviour
         }
         else if (collision.CompareTag("Obstacles"))
         {
+            GameManager.Instance.GetComponent<CinemachineImpulseSource>().DefaultVelocity = new Vector3(0.05f, 0.05f, 0);
+            GameManager.Instance.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
             Destroy(gameObject);
         }
         else if (collision.CompareTag("ToxicWall"))
         {
-            explosion = collision.transform.GetChild(0).GetComponent<ParticleSystem>();
+            if (collision.transform.childCount > 0)
+                explosion = collision.transform.GetChild(0).GetComponent<ParticleSystem>();
+            
             explosion.Play();
 
             if (collision.transform.childCount > 0)
                 collision.transform.DetachChildren();
 
             AudioManager.Instance.PlaySFX("Explosion");
+            GameManager.Instance.GetComponent<CinemachineImpulseSource>().DefaultVelocity = new Vector3(0.3f, 0.3f, 0);
             GameManager.Instance.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
 
-            DestroyDoor(1f, 0f, 0.2f, collision.gameObject);
+            DestroyDoor(1f, 0f, 0.4f, collision.gameObject);
+
+            Destroy(gameObject);
         }
     }
 
@@ -76,8 +84,8 @@ public class Bullet : MonoBehaviour
             })
             .setOnComplete(() =>
             {
-                Destroy(objToDestroy);
-                Destroy(gameObject);
+                if (objToDestroy != null)
+                    Destroy(objToDestroy);
             }); ;
     }
 }

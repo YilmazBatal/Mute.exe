@@ -89,6 +89,7 @@ public class AudioManager : MonoBehaviour
         {
             musicSource.clip = s.clip;
             musicSource.Play();
+            Debug.LogWarning($"Supposed to play: {musicName}");
         }
         else
         {

@@ -4,9 +4,9 @@ public class SceneInitializer : MonoBehaviour
 {
 
     [Header("Initializer")]
-    [SerializeField] private int requiredFragmentsForThisLevel = 3; 
+    [SerializeField] private int requiredFragmentsForThisLevel; 
     [SerializeField] private string levelName = "Maze 1";
-    private void Start()
+    private void Awake()
     {
         if (GameManager.Instance != null)
             GameManager.Instance.Initialize(requiredFragmentsForThisLevel, levelName);

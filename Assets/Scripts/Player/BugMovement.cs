@@ -1,5 +1,6 @@
 using Assets.Scripts.Managers;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BugMovement : MonoBehaviour
 {
@@ -10,8 +11,22 @@ public class BugMovement : MonoBehaviour
     private float cooldownTimer = 0f; 
 
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private float acceleration = 5f;
+    [SerializeField] private float runSpeedMultiplier = 1.5f;
+    private float currentSpeed;
+
+    [Header("Running")]
+    [Header("Stamina System")]
+    [SerializeField] private Image staminaBar;
+    [SerializeField] private float maxStamina = 100f;
+    [SerializeField] private float staminaDrainRate = 10f;
+    [SerializeField] private float staminaRegenRate = 20f; 
+    [SerializeField] private float regenDelay = 1.5f;
+
+    private float currentStamina;
+    private float regenTimer = 0f;
+    private bool isRunning;
 
     [HideInInspector] private AudioSource audioSource;
     [HideInInspector] public Rigidbody2D rb;
@@ -24,6 +39,10 @@ public class BugMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+
+        currentStamina = maxStamina;
+        staminaBar.fillAmount = 1;
+        currentSpeed = walkSpeed;
     }
 
     float rotationSpeed = 720f; // Degrees per second
@@ -31,7 +50,6 @@ public class BugMovement : MonoBehaviour
     {
         if (!DialogueManager.Instance.dialogueIsPlaying)
         {
-            // Cooldown süresini zamanla azalt
             if (cooldownTimer > 0)
             {
                 cooldownTimer -= Time.deltaTime;
@@ -61,13 +79,15 @@ public class BugMovement : MonoBehaviour
                 audioSource.Stop();
             }
 
+            HandleStaminaAndRunning();
             GenerateBullet();
         }
     }
 
     void FixedUpdate()
     {
-        Vector2 targetVelocity = moveInput * moveSpeed;
+        Vector2 targetVelocity = moveInput * currentSpeed;
+
         rb.linearVelocity = Vector2.MoveTowards(rb.linearVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
 
         // Set Animation
@@ -75,16 +95,61 @@ public class BugMovement : MonoBehaviour
         animator.SetBool("isMoving", isMoving);
     }
 
+    private void HandleStaminaAndRunning()
+    {
+        bool isMoving = moveInput.sqrMagnitude > 0.001f;
+        bool runRequested = controls.Player.Sprint.IsPressed();
+
+        if (runRequested && isMoving && currentStamina > 0)
+        {
+            isRunning = true;
+            currentSpeed = walkSpeed * runSpeedMultiplier;
+
+            currentStamina -= staminaDrainRate * Time.deltaTime;
+            currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
+
+            regenTimer = regenDelay;
+
+            UpdateStaminaUI();
+        }
+        else
+        {
+            isRunning = false;
+            currentSpeed = walkSpeed;
+
+            if (regenTimer > 0)
+            {
+                regenTimer -= Time.deltaTime;
+            }
+            else if (currentStamina < maxStamina)
+            {
+                currentStamina += staminaRegenRate * Time.deltaTime;
+                currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
+
+                UpdateStaminaUI();
+            }
+        }
+    }
+
+    private void UpdateStaminaUI()
+    {
+        float targetFill = currentStamina / maxStamina;
+
+        LeanTween.value(staminaBar.gameObject, staminaBar.fillAmount, targetFill, 0.1f)
+            .setOnUpdate((float val) =>
+            {
+                staminaBar.fillAmount = val;
+            });
+    }
+
     void GenerateBullet()
     {
-        // controls.Player.Attack.IsPressed() -> Tuşa basılı tutulduğu sürece true döner
         if (controls.Player.Attack.IsPressed() && cooldownTimer <= 0f)
         {
             cooldownTimer = attackCooldown;
 
             GameObject bullet = Instantiate(bulletPrefab, shootingPoint.position, shootingPoint.rotation);
             AudioManager.Instance.PlaySFX("Shooting");
-
         }
     }
 }
