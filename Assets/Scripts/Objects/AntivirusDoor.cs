@@ -1,20 +1,20 @@
 using Assets.Scripts.Interfaces;
 using Assets.Scripts.Managers;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AntivirusDoor : MonoBehaviour, IInteractable
 {
     public bool CanInteract => true;
     public int fragmentRequired = 1;
-    private TMP_Text fragmentText;
+    [SerializeField] private TMP_Text fragmentText;
     private SpriteOutline spriteOutline;
+    private ParticleSystem smoke;
 
     private void Awake()
     {
         spriteOutline = GetComponent<SpriteOutline>();
-        fragmentText = transform.GetChild(0).GetComponent<TMP_Text>();
     }
     private void Start()
     {
@@ -39,7 +39,12 @@ public class AntivirusDoor : MonoBehaviour, IInteractable
         if (GameManager.Instance.fragments >= fragmentRequired)
             UnlockDoor(gameObject, 1f, 0f, 0.4f);
         else
+        {
+            AudioManager.Instance.PlaySFX("UIError");
             Extensions.FailEffect(UIManager.Instance.volume, this);
+            GameManager.Instance.GetComponent<CinemachineImpulseSource>().DefaultVelocity = new Vector3(0.2f, 0.2f, 0);
+            GameManager.Instance.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
+        }
     }
     public void OnRangeEnter()
     {
@@ -57,6 +62,18 @@ public class AntivirusDoor : MonoBehaviour, IInteractable
     }
     public void UnlockDoor(GameObject gameObject, float from, float to, float duration)
     {
+        GameManager.Instance.GetComponent<CinemachineImpulseSource>().DefaultVelocity = new Vector3(0.1f, 0.1f, 0);
+        GameManager.Instance.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
+        AudioManager.Instance.PlaySFX("UISuccess");
+
+        if (transform.childCount > 0)
+            smoke = transform.GetChild(0).GetComponent<ParticleSystem>();
+
+        smoke.Play();
+
+        if (transform.childCount > 0)
+            transform.DetachChildren();
+
         SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
         if (sr == null)
             return;

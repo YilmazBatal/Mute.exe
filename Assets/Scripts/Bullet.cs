@@ -6,8 +6,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private float speed = 10f;       // Merminin uçuş hızı
-    [SerializeField] private float lifeTime = 2f;     // Kaç saniye sonra yok olacağı
+    [SerializeField] private float speed = 10f;  
+    [SerializeField] private float lifeTime = 2f;  
     private ParticleSystem explosion;
     private Rigidbody2D rb;
 
