@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 3507962047477140016}
   - component: {fileID: 8099165652080604876}
   - component: {fileID: 1432185778248335846}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HackingChip
   m_TagString: interactable
   m_Icon: {fileID: 0}

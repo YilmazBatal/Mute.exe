@@ -1,6 +1,7 @@
 using Assets.Scripts.Managers;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
@@ -8,18 +9,30 @@ public class Bullet : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float speed = 10f;  
     [SerializeField] private float lifeTime = 2f;  
+    [SerializeField] private float damage = 20f;
     private ParticleSystem explosion;
     private Rigidbody2D rb;
-
-    void Start()
+    private Vector3 _shootingPoint;
+    private void Start()
     {
+        _shootingPoint = transform.position;
         rb = GetComponent<Rigidbody2D>();
 
-        rb.linearVelocity = transform.up * speed;
+        rb.linearVelocity = (AimingDirection() - _shootingPoint).normalized * speed;
 
         InstantiateAnimation();
 
         Destroy(gameObject, lifeTime);
+    }
+
+    private Vector3 AimingDirection()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = -Camera.main.transform.position.z;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+
+        return worldPos;
     }
     private void InstantiateAnimation()
     {
@@ -34,8 +47,10 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
         {
+            enemy.TakeDamage(damage);
+            enemy.ApplyKnockback((collision.transform.position - transform.position).normalized, 100/enemy.GetComponent<Rigidbody2D>().mass);
             Destroy(gameObject);
         }
         else if (collision.CompareTag("Obstacles"))

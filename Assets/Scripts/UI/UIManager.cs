@@ -59,9 +59,6 @@ public class UIManager : MonoBehaviour
     {
         if (fragmentText != null)
             fragmentText.text = $"{GameManager.Instance.fragments}/{GameManager.Instance.maxFragments}";
-
-        nextStageUI = GameObject.FindWithTag("NextStage");
-
     }
     private void Update()
     {

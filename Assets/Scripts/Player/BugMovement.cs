@@ -45,6 +45,11 @@ public class BugMovement : MonoBehaviour
         currentSpeed = walkSpeed;
     }
 
+    private void OnEnable()
+    {
+        EventManager.GameEvents.PlayerSpawned(transform);
+    }
+
     float rotationSpeed = 720f; // Degrees per second
     void Update()
     {

@@ -61,14 +61,14 @@ MonoBehaviour:
   - name: Interact
     clip: {fileID: 8300000, guid: 09167c17ce9efee4e9651be6a6bb3fbf, type: 3}
   - name: BugStepping
-    clip: {fileID: 8300000, guid: 61b9383b8a4d42b4db8d0eb635fca938, type: 3}
+    clip: {fileID: 8300000, guid: 7999aff8bfa96314aa6a2c536ae8ce17, type: 3}
   - name: Shooting
     clip: {fileID: 8300000, guid: e4d32d5fbf44bc04dbbd96459c92715d, type: 3}
   - name: EnemyHurt
     clip: {fileID: 8300000, guid: 025284036221d554ab982c7100a06fa2, type: 3}
   - name: Explosion
     clip: {fileID: 8300000, guid: 0bcadf546860fda4c955fc2720699d9d, type: 3}
-  - name: UiSuccess
+  - name: UISuccess
     clip: {fileID: 8300000, guid: cb63add8195b2584391198d4138ae726, type: 3}
   - name: UIError
     clip: {fileID: 8300000, guid: 22969c90d67757343b7d98fa33e3e9e1, type: 3}
@@ -76,7 +76,7 @@ MonoBehaviour:
   - name: MenuMusic
     clip: {fileID: 8300000, guid: cb46fd9ad91f9fc4bbb3a6956212467f, type: 3}
   - name: GameMusic
-    clip: {fileID: 8300000, guid: cb63add8195b2584391198d4138ae726, type: 3}
+    clip: {fileID: 8300000, guid: ee7dc7c98e765f649a8685810eeabae0, type: 3}
 --- !u!82 &1781719623007851886
 AudioSource:
   m_ObjectHideFlags: 0

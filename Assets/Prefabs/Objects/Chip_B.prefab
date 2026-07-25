@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 2060868369393375134}
   - component: {fileID: 2750229565619399133}
   - component: {fileID: 2606393402228526273}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Chip_B
   m_TagString: interactable
   m_Icon: {fileID: 0}
