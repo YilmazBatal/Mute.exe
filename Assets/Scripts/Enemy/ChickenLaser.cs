@@ -9,6 +9,7 @@ public class ChickenLaser : MonoBehaviour
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifeTime = 2f;
     [SerializeField] private float recoil = 0.25f;
+    [SerializeField] private float damage = 20f;
     private Rigidbody2D rb;
 
     private void Awake()
@@ -25,13 +26,24 @@ public class ChickenLaser : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
 
+        AudioManager.Instance.PlaySFX("EnemyShoot");
+
         Destroy(gameObject, lifeTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.TryGetComponent<BugMovement>(out BugMovement player))
         {
+            player.TakeDamage(damage);
+            player.ApplyKnockback((collision.transform.position - transform.position).normalized, 100 / player.GetComponent<Rigidbody2D>().mass);
+
+            AudioManager.Instance.PlaySFX("PlayerHurt");
+
+
+            GameManager.Instance.GetComponent<CinemachineImpulseSource>().DefaultVelocity = new Vector3(0.1f, 0.1f, 0);
+            GameManager.Instance.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
+
             Destroy(gameObject);
         }
         else if (collision.CompareTag("Obstacles"))

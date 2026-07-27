@@ -37,15 +37,7 @@ public class ChickenDrone : Enemy
     private bool _hasPatrolTarget;
     private float distanceToTarget;
 
-    private Transform target;
-    private AIPath path;
-
-
-    #region Assign Player
-    private void OnEnable() => EventManager.GameEvents.OnPlayerSpawned += HandlePlayerSpawned;
-    private void OnDisable() => EventManager.GameEvents.OnPlayerSpawned -= HandlePlayerSpawned;
-    private void HandlePlayerSpawned(Transform playerTransform) => target = playerTransform;
-    #endregion
+    
 
     protected override void Awake()
     {
@@ -59,14 +51,30 @@ public class ChickenDrone : Enemy
     private void Start()
     {
         ChangeState(EnemyState.Idle); // start by idle
+
+        if (target == null)
+            GetTarget();
+    }
+
+    private void GetTarget()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        target = player.transform;
     }
 
     private void Update()
     {
         distanceToTarget = Vector2.Distance(transform.position, target.position);
 
-        CheckStateTransitions();
-        ExecuteCurrentState();
+        if (!isDead)
+        {
+            CheckStateTransitions();
+            ExecuteCurrentState();
+        }
+        else
+        {
+            ChangeState(EnemyState.Idle);
+        }
     }
     private void SetNewPatrolTarget()
     {
@@ -149,10 +157,15 @@ public class ChickenDrone : Enemy
     #endregion
     private void ExecutePatrol()
     {
+        Debug.Log("Patrol target : " + _hasPatrolTarget);
         if (!_hasPatrolTarget)
             SetNewPatrolTarget();
+        if (Vector2.Distance(transform.position, _patrolTarget) < 1.3f)
+        {
+            
+        }
 
-        if (path.reachedDestination || Vector2.Distance(transform.position, _patrolTarget) < 0.5f) // hard code here
+        if (path.reachedDestination || Vector2.Distance(transform.position, _patrolTarget) < 0.3f) // hard code here
         {
             _hasPatrolTarget = false;
             ChangeState(EnemyState.Idle);
@@ -164,6 +177,20 @@ public class ChickenDrone : Enemy
     {
         path.maxSpeed = moveSpeed;
         path.destination = target.position;
+
+        if (!IsTargetReachable())
+        {
+            path.isStopped = true;
+            return;
+        }
+
+        path.isStopped = false;
+        path.destination = target.position;
+
+        if (path.desiredVelocity.x < -0.01f)
+            sr.flipX = true;
+        else if (path.desiredVelocity.x > 0.01f)
+            sr.flipX = false;
     }
 
     private void PerformAttack()

@@ -1,7 +1,7 @@
 using Assets.Scripts.Managers;
+using System.Diagnostics;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
@@ -51,6 +51,9 @@ public class Bullet : MonoBehaviour
         {
             enemy.TakeDamage(damage);
             enemy.ApplyKnockback((collision.transform.position - transform.position).normalized, 100/enemy.GetComponent<Rigidbody2D>().mass);
+            AudioManager.Instance.PlaySFX("EnemyHurt");
+            GameManager.Instance.GetComponent<CinemachineImpulseSource>().DefaultVelocity = new Vector3(0.13f, 0.13f, 0);
+            GameManager.Instance.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
             Destroy(gameObject);
         }
         else if (collision.CompareTag("Obstacles"))

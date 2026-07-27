@@ -1,3 +1,4 @@
+using Assets.Scripts.Managers;
 using Pathfinding;
 using System.Collections;
 using UnityEngine;
@@ -11,18 +12,39 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField, Range(0.01f, 1f)] protected float knockbackDuration = 0.15f;
     protected float currentHealth;
 
-    [Header("Materials")]
+    [Header("VFX")]
     [SerializeField] protected Material defaultMaterial;
     [SerializeField] protected Material flashMaterial;
+    [SerializeField] protected ParticleSystem particle;
 
+    protected Transform target;
+    protected bool isDead = false;
+    protected bool _hasValidPath = true; 
     protected AIPath path;
+    protected Seeker seeker;
     protected SpriteRenderer sr;
     protected Rigidbody2D rb;
     protected Animator animator;
 
+
+    #region Enable & Disable
+    protected virtual void OnEnable()
+    {
+        seeker.pathCallback += OnPathComplete;
+        EventManager.GameEvents.OnPlayerSpawned += HandlePlayerSpawned;
+    }
+    protected virtual void OnDisable() {
+        seeker.pathCallback -= OnPathComplete;
+        EventManager.GameEvents.OnPlayerSpawned -= HandlePlayerSpawned;
+    }
+    private void HandlePlayerSpawned(Transform playerTransform) => target = playerTransform;
+
+    #endregion
+
     protected virtual void Awake()
     {
         path = GetComponent<AIPath>();
+        seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -41,7 +63,37 @@ public abstract class Enemy : MonoBehaviour
     }
     protected virtual void Die()
     {
+        StartCoroutine(DieCoroutine());
+    }
+
+    private IEnumerator DieCoroutine()
+    {
+        isDead = true;
+
+        sr.enabled = false; 
+        if (TryGetComponent<Collider2D>(out var col)) col.enabled = false;
+
+        AudioManager.Instance.PlaySFX("EnemyDie");
+        particle.Play();
+
+        while (particle.IsAlive(true))
+        {
+            yield return null; 
+        }
+
         Destroy(gameObject);
+    }
+
+    private void OnPathComplete(Path p)
+    {
+        if (p.error)
+        {
+            _hasValidPath = false;
+        }
+        else
+        {
+            _hasValidPath = true;
+        }
     }
 
     protected abstract void Move();
@@ -70,5 +122,11 @@ public abstract class Enemy : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         path.canMove = true;
     }
+    protected bool IsTargetReachable()
+    {
+        GraphNode enemyNode = AstarPath.active.GetNearest(transform.position).node;
+        GraphNode targetNode = AstarPath.active.GetNearest(target.position).node;
 
+        return PathUtilities.IsPathPossible(enemyNode, targetNode);
+    }
 }

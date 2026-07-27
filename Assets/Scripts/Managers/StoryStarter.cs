@@ -76,7 +76,7 @@ public class StoryStarter : MonoBehaviour
 
             if (AudioManager.Instance != null && i < totalVisibleCharacters)
             {
-                AudioManager.Instance.PlaySFX(audioSFXName);
+                //AudioManager.Instance.PlaySFX(audioSFXName); // enable again when intro is active
             }
 
             yield return new WaitForSeconds(typingSpeed);
