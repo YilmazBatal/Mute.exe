@@ -66,6 +66,11 @@ public class ChickenDrone : Enemy
     {
         distanceToTarget = Vector2.Distance(transform.position, target.position);
 
+        if (path.desiredVelocity.x < -0.01f)
+            sr.flipX = true;
+        else if (path.desiredVelocity.x > 0.01f)
+            sr.flipX = false;
+
         if (!isDead)
         {
             CheckStateTransitions();
@@ -78,9 +83,15 @@ public class ChickenDrone : Enemy
     }
     private void SetNewPatrolTarget()
     {
-        Vector2 randomCircle = Random.insideUnitCircle * patrolRange;
-        _patrolTarget = _startPosition + new Vector3(randomCircle.x, randomCircle.y, 0);
+        Vector2 randomCircle;
+        Vector3 candidate;
+        do
+        {
+            randomCircle = Random.insideUnitCircle * patrolRange;
+            candidate = _startPosition + new Vector3(randomCircle.x, randomCircle.y, 0);
+        } while (Vector3.Distance(transform.position, candidate) < 1.5f);
 
+        _patrolTarget = candidate;
         _hasPatrolTarget = true;
         path.isStopped = false;
         path.destination = _patrolTarget;
@@ -157,20 +168,16 @@ public class ChickenDrone : Enemy
     #endregion
     private void ExecutePatrol()
     {
-        Debug.Log("Patrol target : " + _hasPatrolTarget);
         if (!_hasPatrolTarget)
             SetNewPatrolTarget();
-        if (Vector2.Distance(transform.position, _patrolTarget) < 1.3f)
-        {
-            
-        }
 
-        if (path.reachedDestination || Vector2.Distance(transform.position, _patrolTarget) < 0.3f) // hard code here
+        if (path.reachedEndOfPath || Vector2.Distance(transform.position, _patrolTarget) < 0.8f)
         {
             _hasPatrolTarget = false;
             ChangeState(EnemyState.Idle);
         }
     }
+    
 
     #region Chicken State Commands
     protected override void Move()
