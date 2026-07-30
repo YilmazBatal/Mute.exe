@@ -1,4 +1,4 @@
-# Mute.exe (BAU GameJam Project)
+# Mute.exe (BAU GameJam Project).
 
 A top-down 2D puzzle-action Unity game where you control a **bug** navigating through security environments, collecting data fragments, dodging/defeating antivirus systems, and solving digital minigames to hack systems.
 
