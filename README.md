@@ -2,6 +2,7 @@
 
 A top-down 2D puzzle-action Unity game where you control a **bug** navigating through security environments, collecting data fragments, dodging/defeating antivirus systems, and solving digital minigames to hack systems.
 
+[![Play on Itch.io](https://img.shields.io/badge/Play%20on-Itch.io-FA5C5C?style=for-the-badge&logo=itch.io&logoColor=white)](https://ilmas.itch.io/mute-exe)
 ![Unity](https://img.shields.io/badge/Unity-6000.0-black?style=for-the-badge&logo=unity)
 ![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
 ![A* Pathfinding](https://img.shields.io/badge/A*-Pathfinding-blue?style=for-the-badge)
@@ -41,15 +42,29 @@ The codebase is built on top of standard Unity best practices, clean C# patterns
 
 | Intro | Combat | Puzzle |
 | :--- | :--- | :--- |
-| <img width="300" height="170" alt="introOptimize" src="https://github.com/user-attachments/assets/70357b52-e7e5-468b-93a5-60c4042d23d6" /> | <img width="300" height="170" alt="pveOptimize" src="https://github.com/user-attachments/assets/40b3517e-4c67-4cca-bcdc-20e040ee3ed6" /> | <img width="300" height="170" alt="puzzleOptimize" src="https://github.com/user-attachments/assets/f1dd8ba4-2c79-426d-b69d-478546d47a01" /> |
+| <img width="300" height="170" alt="introOptimize" src="https://github.com/user-attachments/assets/70357b52-e7e5-468b-93a5-60c4042d23d6" /> | <img width="300" height="170" alt="pveOptimize-ezgif com-resize" src="https://github.com/user-attachments/assets/5ebf9a69-094d-459f-a321-d09798a9a065" /> | <img width="300" height="170" alt="puzzleOptimize-ezgif com-resize" src="https://github.com/user-attachments/assets/938f581c-b4fb-4c87-a5c2-773b9b5d6587" /> |
 
 ---
 
 ## 🎮 Controls
-`<WASD>` to move around
-`<Mouse>` to aim & look around
-`<Space>` to shoot
-`<E>` to Interact
+- `<WASD>` to move around
+- `<Mouse>` to aim & look around
+- `<Space>` to shoot
+- `<E>` to Interact
+
+---
+
+## 🛠️ How to Run
+
+You can download and play the compiled Windows executable or set up the project locally to inspect the codebase.
+
+### 🎮 Download for Windows
+No Unity Editor required! Download the standalone Windows build directly from Itch.io:
+1. Go to **[Mute.exe on Itch.io](https://ilmas.itch.io/mute-exe)**.
+2. Download the `.zip` file for Windows.
+3. Extract the contents and run `Mute.exe`.
+
+---
 
 ## 🌟 Special Thanks
 Special thanks to [Meso78](https://github.com/meso78) for Game Musics and contributing to Story.
