@@ -68,7 +68,7 @@ public class BugMovement : MonoBehaviour
 
         if (_currentHealth <= 0)
         {
-            Debug.Log("DEAD");
+            MySceneManager.Instance.ReloadLevel();
             //die and restart menu;
         }
     }
@@ -210,4 +210,5 @@ public class BugMovement : MonoBehaviour
             AudioManager.Instance.PlaySFX("Shooting");
         }
     }
+    
 }
