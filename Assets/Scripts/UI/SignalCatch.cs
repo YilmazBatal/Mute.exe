@@ -78,6 +78,7 @@ public class SignalCatch : MonoBehaviour
         else
         {
             Extensions.FailEffect(um.volume, this);
+            AudioManager.Instance.PlaySFX("UIError");
             um.CloseMinigame(minigame: Minigames.SignalCatch, false);
             Debug.Log("Incorrect choice. Try again!");
             Debug.Log("Size : " + signalSizeCurrent);
@@ -116,7 +117,7 @@ public class SignalCatch : MonoBehaviour
         RandomizeTheGame();
         AssignButtonFunctions();
 
-        EventManager.OnFragmentChanged += OnFragmentChanged;
+        EventManager.GameEvents.OnFragmentChanged += OnFragmentChanged;
 
     }
 
@@ -125,7 +126,7 @@ public class SignalCatch : MonoBehaviour
         LeanTween.cancel(signalRect.gameObject);
         signalRect.position = wifi.position;
 
-        EventManager.OnFragmentChanged -= OnFragmentChanged;
+        EventManager.GameEvents.OnFragmentChanged -= OnFragmentChanged;
     }
 
     private int currentSignalIndex;
@@ -191,9 +192,10 @@ public class SignalCatch : MonoBehaviour
         Color c = signalImage.color;
         c.a = 0f;
         signalImage.color = c;
+        AudioManager.Instance.PlaySFX("UISuccess");
 
         GameManager.Instance.fragments += 1;
-        EventManager.TriggerFragmentChanged(GameManager.Instance.fragments);
+        EventManager.GameEvents.TriggerFragmentChanged(GameManager.Instance.fragments);
 
         Debug.Log("Minigame Complete!");
         um.CloseMinigame(minigame: Minigames.SignalCatch, didPlayerWin: true);

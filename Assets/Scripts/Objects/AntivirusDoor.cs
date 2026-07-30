@@ -23,11 +23,11 @@ public class AntivirusDoor : MonoBehaviour, IInteractable
 
     private void OnEnable()
     {
-        EventManager.OnFragmentChanged += UpdateFragmentText;
+        EventManager.GameEvents.OnFragmentChanged += UpdateFragmentText;
     }
     private void OnDisable()
     {
-        EventManager.OnFragmentChanged -= UpdateFragmentText;
+        EventManager.GameEvents.OnFragmentChanged -= UpdateFragmentText;
     }
     private void UpdateFragmentText(int currentFragments)
     {

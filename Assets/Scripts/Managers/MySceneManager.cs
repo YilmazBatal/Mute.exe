@@ -20,6 +20,11 @@ public class MySceneManager : MonoBehaviour
         SceneManager.LoadScene(1);
         
     }
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
+
+    }
     public void NextLevel()
     {
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
@@ -45,7 +50,6 @@ public class MySceneManager : MonoBehaviour
     
     private void MusicPlayer()
     {
-        Debug.Log("Music Player func called.");
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             AudioManager.Instance.PlayMusic("MenuMusic");
@@ -54,5 +58,8 @@ public class MySceneManager : MonoBehaviour
             AudioManager.Instance.PlayMusic("GameMusic");
         }
     }
-    
+    public void PlayEasterEgg()
+    {
+        AudioManager.Instance.PlaySFX("fart");
+    }
 }

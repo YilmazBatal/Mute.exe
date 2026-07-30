@@ -1,0 +1,1 @@
+﻿{"inkVersion":21,"root":[[{"->":"Main"},["done",{"#f":5,"#n":"g-0"}],null],"done",{"Main":["^Hey! <color=#F8FF30>Hacking Chip</color> is right there! ","#","^speaker : SYSTEM ","/#","#","^portrait : owin_neutral ","/#","#","^layout:right","/#","\n",{"->":"Intro"},{"#f":1}],"Intro":["^We collected enough fragments right?","\n","end",{"#f":1}],"#f":1}],"listDefs":{}}

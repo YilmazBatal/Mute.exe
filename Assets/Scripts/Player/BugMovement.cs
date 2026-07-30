@@ -1,9 +1,16 @@
 using Assets.Scripts.Managers;
+using Pathfinding;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BugMovement : MonoBehaviour
 {
+    [Header("Health")]
+    [SerializeField] private float maxHealth = 100f;
+    private float _currentHealth;
+    [SerializeField] private float cooldownCount = 0.2f;
+
     [Header("Shooting")]
     [SerializeField] private Transform shootingPoint;
     [SerializeField] private GameObject bulletPrefab;
@@ -16,7 +23,6 @@ public class BugMovement : MonoBehaviour
     [SerializeField] private float runSpeedMultiplier = 1.5f;
     private float currentSpeed;
 
-    [Header("Running")]
     [Header("Stamina System")]
     [SerializeField] private Image staminaBar;
     [SerializeField] private float maxStamina = 100f;
@@ -30,19 +36,71 @@ public class BugMovement : MonoBehaviour
 
     [HideInInspector] private AudioSource audioSource;
     [HideInInspector] public Rigidbody2D rb;
+    private SpriteRenderer sr;
     private Animator animator;
     private InputSystem_Actions controls => InputManager.Instance.controls;
     private Vector2 moveInput;
 
+
+
+    [Header("Materials")]
+    [SerializeField] protected Material defaultMaterial;
+    [SerializeField] protected Material flashMaterial;
+    [SerializeField] private float flashTime = 0.015f;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
         currentStamina = maxStamina;
         staminaBar.fillAmount = 1;
         currentSpeed = walkSpeed;
+        _currentHealth = maxHealth;
+    }
+    public void TakeDamage(float damage)
+    {
+        _currentHealth -= damage;
+
+        StartCoroutine(FlashEffect(flashMaterial));
+
+        if (_currentHealth <= 0)
+        {
+            MySceneManager.Instance.ReloadLevel();
+            //die and restart menu;
+        }
+    }
+    public void ApplyKnockback(Vector2 forceDirection, float force)
+    {
+        StartCoroutine(KnockbackRoutine(forceDirection, force));
+    }
+
+    private IEnumerator KnockbackRoutine(Vector2 forceDirection, float force)
+    {
+        InputManager.Instance.EnableUIControls();
+
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(forceDirection.normalized * force, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(cooldownCount);
+
+        rb.linearVelocity = Vector2.zero;
+
+        InputManager.Instance.EnablePlayerControls();
+
+    }
+    private IEnumerator FlashEffect(Material flashMaterial)
+    {
+        sr.material = flashMaterial;
+        yield return new WaitForSeconds(flashTime);
+        sr.material = defaultMaterial;
+    }
+
+    private void OnEnable()
+    {
+        EventManager.GameEvents.PlayerSpawned(transform);
     }
 
     float rotationSpeed = 720f; // Degrees per second
@@ -152,4 +210,5 @@ public class BugMovement : MonoBehaviour
             AudioManager.Instance.PlaySFX("Shooting");
         }
     }
+    
 }

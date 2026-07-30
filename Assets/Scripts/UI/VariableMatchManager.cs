@@ -21,7 +21,7 @@ public class VariableMatchManager : MonoBehaviour
     [SerializeField] private TMP_Text matchText;    
     [SerializeField] private TMP_Text generatedVar; 
     private int correctMatches = 0;
-    private int totalMatches = 1;
+    [SerializeField] private int totalMatches = 3;
 
     [Header("Config")]
     [SerializeField] private float minWidth = 50f;
@@ -70,11 +70,11 @@ public class VariableMatchManager : MonoBehaviour
             um.CloseMinigame(minigame: Minigames.VariableMatch, didPlayerWin: false);
         });
 
-        EventManager.OnFragmentChanged += OnFragmentChanged;
+        EventManager.GameEvents.OnFragmentChanged += OnFragmentChanged;
     }
     private void OnDisable()
     {
-        EventManager.OnFragmentChanged -= OnFragmentChanged;
+        EventManager.GameEvents.OnFragmentChanged -= OnFragmentChanged;
         LeanTween.cancel(arrow.gameObject);
     }
 
@@ -181,6 +181,8 @@ public class VariableMatchManager : MonoBehaviour
             else
             {
                 Debug.Log("Missed! Try again.");
+                AudioManager.Instance.PlaySFX("UIError");
+
                 Extensions.Shake(this.gameObject.GetComponent<RectTransform>(), this, 0.5f, 10f);
                 gm.GetComponent<CinemachineImpulseSource>().DefaultVelocity = new Vector3(0.3f, 0.3f, 0);
                 gm.GetComponent<CinemachineImpulseSource>().GenerateImpulse();
@@ -206,7 +208,8 @@ public class VariableMatchManager : MonoBehaviour
         generatedVar.text = "SUCCESSFULY HACKED!";
 
         GameManager.Instance.fragments += 1;
-        EventManager.TriggerFragmentChanged(GameManager.Instance.fragments);
+        AudioManager.Instance.PlaySFX("UISuccess");
+        EventManager.GameEvents.TriggerFragmentChanged(GameManager.Instance.fragments);
 
         Debug.Log("Minigame Complete!");
         um.CloseMinigame(minigame: Minigames.VariableMatch, didPlayerWin: true);
